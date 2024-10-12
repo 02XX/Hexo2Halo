@@ -194,6 +194,7 @@ export class Halo
                                 tags: tags.map((item) => item.metadata.name),
                                 htmlMetas: [
                                 ],
+                                publishTime: hexoPost.formatter.date?.toISOString() ?? new Date().toISOString(),
                             },
                             apiVersion: "content.halo.run/v1alpha1",
                             kind: "Post",
@@ -235,6 +236,7 @@ export class Halo
                     tags: await this.formatHaloTag(post.post.spec.tags ?? []) ,
                     categories: await this.formatHaloCategory(post.post.spec.categories ?? []),
                     date: post.post.metadata.creationTimestamp ? new Date(post.post.metadata.creationTimestamp) : new Date(),
+                    updated: post.post.status?.lastModifyTime ? new Date(post.post.status.lastModifyTime) : new Date(),
                     comments: post.post.spec.allowComment,
                 },
                 brief: post.post.spec.excerpt.raw ?? "",
