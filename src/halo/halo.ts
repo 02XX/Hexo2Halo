@@ -12,7 +12,8 @@ import {
     PostRequest,
     Category,
     Tag,
-    Group
+    Group,
+    ListedPost
 } from "@halo-dev/api-client"
 import { randomUUID } from 'crypto';
 import limax from 'limax';
@@ -211,7 +212,35 @@ export class Halo
             }
         })
     }
-
+    async UpdatePostFormHexo(hexoPost: HexoPost)
+    {
+        //文章是否存在
+        const posts = (await consoleApiClient.content.post.listPosts()).data.items
+        let post = posts.find((item) => item.post.spec.title == hexoPost.formatter.title)
+        if (post == undefined) {
+            console.log(`Skip update post ${hexoPost.formatter.title}`)
+            return
+        }
+        const categories = await this.CreateCategoryFormHexo(hexoPost)
+        const tags = await this.CreateTagFromHexo(hexoPost)
+        post.post.spec.allowComment = hexoPost.formatter.comments
+        post.post.spec.categories = categories.map((item) => item.metadata.name)
+        post.post.spec.tags = tags.map((item) => item.metadata.name)
+        post.post.spec.excerpt.raw = hexoPost.brief
+        post.post.spec.publish = true
+        await consoleApiClient.content.post.updateDraftPost({
+            name: post.post.metadata.name,
+            postRequest:{
+                post: post.post,
+                content: {
+                    raw: hexoPost.content,
+                    rawType: "markdown",
+                    content: this.markdownIt.render(hexoPost.content),
+                }
+            }
+        })
+        await consoleApiClient.content.post.publishPost({name: post.post.metadata.name})
+    }
     async CreatePostFormHalo(inluceDeleted: boolean = false): Promise<Array<HexoPost>>
     {
         const data = await consoleApiClient.content.post.listPosts()
