@@ -62,7 +62,7 @@ export const correctPostDate = async () => {
     var posts = hexo.loadMarkdown(hexoPostPath)
     await correctData(posts.map(item=>item.hexoPost))
 }
-await syncHexo2Halo(null)
+// await syncHexo2Halo(null)
 await correctPostDate()
 
 
