@@ -45,9 +45,9 @@ export const updateHexo2Halo = async () => {
     //同步hexo到halo
     const hexoPosts = hexo.loadMarkdown(hexoPostPath)
     for (const hexoPost of hexoPosts) {
-        console.log(`开始同步文章${hexoPost.hexoPost.formatter.title}`)
+        console.log(`开始更新文章${hexoPost.hexoPost.formatter.title}`)
         const data = await halo.UpdatePostFormHexo(hexoPost.hexoPost)
-        console.log(`同步文章${hexoPost.hexoPost.formatter.title}成功`)
+        console.log(`更新文章${hexoPost.hexoPost.formatter.title}成功`)
         //sleep 500ms
         await new Promise((resolve) => {
             setTimeout(resolve, 500)
@@ -56,9 +56,9 @@ export const updateHexo2Halo = async () => {
     //同步图片到halo
     const hexoPostImages = hexo.loadMarkdownImage(hexoPostPath)
     for (const hexoPostImage of hexoPostImages) {
-        console.log(`开始同步图片${hexoPostImage.group}/${hexoPostImage.name}`)
+        console.log(`开始更新图片${hexoPostImage.group}/${hexoPostImage.name}`)
         const data = await halo.UploadImageFromHexo(hexoPostImage)
-        console.log(`同步图片${hexoPostImage.group}/${hexoPostImage.name}成功`)
+        console.log(`更新图片${hexoPostImage.group}/${hexoPostImage.name}成功`)
         //sleep 500ms
         await new Promise((resolve) => {
             setTimeout(resolve, 500)
@@ -72,16 +72,16 @@ export const createHalo2Hexo = async (event: any) => {
     //更新halo到hexo
     const posts = await halo.CreatePostFormHalo()
     for (const post of posts) {
-        console.log(`开始更新文章${post.formatter.title}`)
+        console.log(`开始同步文章${post.formatter.title}`)
         hexo.writeHexoPost(post, savePath)
-        console.log(`更新文章${post.formatter.title}成功`)
+        console.log(`同步文章${post.formatter.title}成功`)
     }
     //更新图片到hexo
     const images = await halo.CreatePostImageFromHalo(haloAttachmentPath)
     for (const image of images) {
-        console.log(`开始更新图片${image.group}/${image.name}`)
+        console.log(`开始同步图片${image.group}/${image.name}`)
         hexo.writeHexoPostImage(image, savePath)
-        console.log(`更新图片${image.group}/${image.name}成功`)
+        console.log(`同步图片${image.group}/${image.name}成功`)
     }
 }
 export const correctPostDate = async () => {
