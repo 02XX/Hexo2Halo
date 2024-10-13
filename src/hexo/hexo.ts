@@ -56,11 +56,12 @@ ${hexoPost.content}`
         fs.writeFileSync(`${savePath}/${hexoPostImage.group}/${hexoPostImage.name}`, hexoPostImage.buffer, { flag: 'w' })
     }
     formatHexoPostImage2Halo(hexoPost: HexoPost) : void{
-        const pattern = /!\[([\s\S]*)\]\(\.\/[\s\S]*\/([\s\S]*)\)/
-        var matches = hexoPost.content.match(pattern)
+        const pattern = /\!\[(.*)\]\(\.\/.*\/(.*)\)/g
+        var matches = hexoPost.content.matchAll(pattern)
         if (matches != null) {
-            //匹配成功
-            hexoPost.content = hexoPost.content.replace(pattern, `![${matches[1]}](upload/${matches[2]})`)
+            for (const match of matches) {
+                hexoPost.content = hexoPost.content.replace(match[0], `![${match[1]}](upload/${match[2]})`)
+            }
         }
     }
     loadMarkdown(path: string) : Array<{hexoPost:HexoPost, path:string}>
