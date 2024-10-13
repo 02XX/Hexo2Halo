@@ -46,6 +46,10 @@ ${yaml.dump(hexoPost.formatter, { indent: 2, flowLevel: 2 })}
 ${hexoPost.brief}
 <!--more-->
 ${hexoPost.content}`
+        if(!fs.existsSync(savePath))
+        {
+            fs.mkdirSync(savePath)
+        }
         fs.writeFileSync(`${savePath}/${hexoPost.formatter.title}.md`, content)
     }
     writeHexoPostImage(hexoPostImage: HexoPostImage, savePath: string):void
