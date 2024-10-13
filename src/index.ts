@@ -57,8 +57,13 @@ export const syncHalo2Hexo = async (event: any) => {
         console.log(`同步图片${image.group}/${image.name}成功`)
     }
 }
-
-syncHexo2Halo(null)
+export const correctPostDate = async () => {
+    var hexo = new Hexo()
+    var posts = hexo.loadMarkdown(hexoPostPath)
+    await correctData(posts.map(item=>item.hexoPost))
+}
+await syncHexo2Halo(null)
+await correctPostDate()
 
 
 
