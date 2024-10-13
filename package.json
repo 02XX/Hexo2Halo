@@ -5,8 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "tsx src/index.ts",
-    "test": "tsx src/test/test.ts",
+    "createHexo2Halo": "tsx src/create-halo-post.ts",
+    "createHalo2Hexo": "tsx src/create-hexo-post.ts",
+    "updateHexo2Halo": "tsx src/update-halo-post.ts",
     "data": "tsx src/halo/correctData.ts"
   },
   "author": "",

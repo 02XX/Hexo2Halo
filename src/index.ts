@@ -65,7 +65,7 @@ export const updateHexo2Halo = async () => {
         })
     }
 }
-export const createHalo2Hexo = async (event: any) => {
+export const createHalo2Hexo = async () => {
     const halo = new Halo(siteUrl,token)
     halo.initialize()
     const hexo = new Hexo()
@@ -89,8 +89,7 @@ export const correctPostDate = async () => {
     var posts = hexo.loadMarkdown(hexoPostPath)
     await correctData(posts.map(item=>item.hexoPost))
 }
-await updateHexo2Halo()
-// await correctPostDate()
+
 
 
 
