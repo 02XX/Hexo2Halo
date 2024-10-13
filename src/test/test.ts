@@ -8,8 +8,8 @@ import markdownit from 'markdown-it'
 import MarkdownIt from "markdown-it";
 import { katex } from '@mdit/plugin-katex'
 import * as https from 'https';
-const siteUrl = "https://114.213.212.248"
-const token = "pat_eyJraWQiOiJsQ3U0VXUzNVVqR201UHJoZUMxelV2MzFTTk5fcHVtS3poYlJMUVltcldJIiwiYWxnIjoiUlMyNTYifQ.eyJpc3MiOiJodHRwOi8vMTE0LjIxMy4yMTIuMjQ4OjgwOTAvIiwic3ViIjoiMDIiLCJpYXQiOjE3Mjg3MzMwOTgsImp0aSI6ImY3ODlkNTZiLTZmM2EtMDQ4Ny01NTRlLWRlNzJjYjJjN2FlMCIsInBhdF9uYW1lIjoicGF0LTAyLW94WHhxIn0.BNsoBzXnFVVKGQBqKcAWElz2ARKa8KSaYuMsAMjs3eQimEOtFq7klDhm_xBlSYAn9ltGRtj7AkiQyvg8zOvMfoUDzzrdH1mXkrMGzP3dSFJeD91eI5o5HNXMkXwvv8yDYy2yjUE7p68Ezrh4lr9KyhBW3ey5JRHxbEYvoQT2qSg9Qu-0ZoatpqlVDQ5TY-yHjItJ5-PAvvICEST9Xk1bRVT-vbJre1dHYwH0vlxfYAxh9y8Fr8EVQAf90yref7ag4BfhNqQo6gnPBLD8kl13spJwO2s2PZnWO1k4B01bPodHeRTqefTEzaLJwJwxF7Eb8JnTrHMZnV3BSvSIgEnCF3lzwBrIqKKnECooiBhr-9b9fCM4c7PLFBTLMRkwcxBWMl1ofA4EMghkmKmyuPcOPLIUAxG3JxtB3BNS4ouJtqKfR1xTXQaqVnU8PzAS7M90rzDNIcGRdzkN2Unt-wtJPaxa0hISJaIwG6Ze5pEvd9vZWTk6d_OuzxdNuJTA8a3uhTSJYqVh-hC0NRVu6KciefY-3U644uya13uZC8p5gBq04DBaIqbLoYA93lvZyVNU5Wt9zU4FsSJgU9nVOA9U6ovAgkshizJ0cF5eK-YFAaqlS-6Cd8i6UkzMIR_MQFHQHcQ11y59jonwJYZc2IMBkT1XOHQMgYs1IPJpehJ2KzY"
+const siteUrl = "http://localhost:8090"
+const token = "pat_eyJraWQiOiJ4S01OWFdSRzU5ZXNaeE9DaWpIamFoaEQxeE41bUpqNDNSNlZwMWFyWEZvIiwiYWxnIjoiUlMyNTYifQ.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwOTAvIiwic3ViIjoiMDIiLCJpYXQiOjE3Mjg3NTIzOTcsImp0aSI6ImYzMWFkMDcyLWU5N2QtYzExYS1kOTZjLWRiNmUzZjU2NDJlZSIsInBhdF9uYW1lIjoicGF0LTAyLXRNWGV0In0.QrjoeX56E6bygVWyFN1yTezxCVqWm0bsGbdxTTojeb9FWU-_GUEYMtmTgSO3wAVNzcAXcrClv6jsZOaf9MV42Hpyz_c4OyVISrBu3J6dwEae1fym_TxSEPYYgx7LimM_5AB01nnO90g_W4-zfipweMsCNIfTeXOSlXzwqx4eId_ezFR4hsmuoXcFLzLe6zsmN0iW7_y3csgz-GcoJU_xSF02MJ4wJFVPmw1E98xvc1g9j4UKHSDROpd817Z5_KfuLO6wBDFkXFp9NnMo6yc3SOVsOncpPYLIPNSZJYjcGATn2qzryJEnhzCjWF3n8nivt5XY7JKM8LMQgwFGFKoQY9UNs5b1rgjp7KbNf77hHNi2PFXkUtUofkuGPlilnTp4Ftbyj14sc-YzvlWZ5FBlt-vYZO9ERi-Bvj2YVB34PMVkbkTCM0hsHmw8ZXBp7-a6z26GrNLyiuII6bE-E-lpXaUGjGi23MeQl-YlQD5rOnZFUHCuErRZbMLwY7-lUgUWe2NAD4z6sQ9Q6gVglHZuipt4HZlx3tmCpz2l-xAtiwIyArq-c1LBbjJmxsfdhYWKveTVNjgWV2oRToIx_qAC69JYLvCn3EbTPUTnpGxFTKb6QRob4gHZ9ztvmmilXtdvgHIXnFUHJw4xFApqjLQIxP1Dc-3jewV5Ff00vsS9Y-k"
 const hexoPostPath = "/media/zero/Data/MBlog/API/Articles"
 const haloAttachmentPath = "/home/zero/halo/halo2/attachments/upload"
 const savePath = "test"
@@ -44,9 +44,11 @@ const data = await consoleApiClient.content.post.draftPost({
                 tags: [],
                 htmlMetas: [
                 ],
+                publishTime: new Date(2018, 5, 3, 10, 0, 0).toISOString()
             },
             status: {
                 phase: "PUBLISHED",
+                lastModifyTime: new Date(2018,5,3,10,0,0).toISOString(),
             },
             apiVersion: "content.halo.run/v1alpha1",
             kind: "Post",
@@ -61,3 +63,4 @@ const data = await consoleApiClient.content.post.draftPost({
         }
     }
 })
+

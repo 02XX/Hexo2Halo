@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "tsx src/index.ts",
-    "test": "tsx src/test/test.ts"
+    "test": "tsx src/test/test.ts",
+    "data": "tsx src/halo/correctData.ts"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +16,9 @@
     "axios": "^1.7.7",
     "limax": "^4.1.0",
     "markdown-it": "^14.1.0",
+    "pg": "^8.13.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.4",
     "slugify": "^1.6.6",
     "tsx": "^4.19.1"
   },
