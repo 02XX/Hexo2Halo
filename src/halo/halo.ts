@@ -294,18 +294,17 @@ export class Halo
         let postImageReturn = new Array<HexoPostImage>()
         const groups = (await coreApiClient.storage.group.listGroup()).data.items
         const attachments = (await coreApiClient.storage.attachment.listAttachment()).data.items
-        let hexoPostImages = new Array<HexoPostImage>()
         for (let attachment of attachments)
         {
             const group = groups.find((item) => item.metadata.name == attachment.spec.groupName)
-            if(group == undefined || attachment.spec.displayName == undefined)
+            if (attachment.spec.displayName == undefined)
             {
-                throw new Error("Group/attachment not found")
+                throw new Error("attachment has no name")
             }
             const buffer = fs.readFileSync(`${haloPath}/${attachment.spec.displayName}`)
             postImageReturn.push({
                 name: attachment.spec.displayName,
-                group: group.spec.displayName,
+                group: group?.spec.displayName ?? "未分类",
                 buffer: buffer
             })
         }

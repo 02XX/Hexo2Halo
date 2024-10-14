@@ -5,6 +5,7 @@ import { HexoPost } from './hexo/hexo-entities.js'
 import { correctData } from './halo/correctData.js'
 
 
+
 const siteUrl = "Your site url"
 const token = "Your token"
 const hexoPostPath = ""

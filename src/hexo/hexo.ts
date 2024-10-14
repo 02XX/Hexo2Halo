@@ -29,11 +29,11 @@ export class Hexo
             HexoPost.formatter = formatterObj
             if (contentMatch.includes('<!--more-->')) {
                 const content = contentMatch.split('<!--more-->')
-                HexoPost.brief = content[0]
-                HexoPost.content = content[1]
+                HexoPost.brief = content[0].trim()
+                HexoPost.content = content[1].trim()
             }
             else {
-                HexoPost.content = contentMatch
+                HexoPost.content = contentMatch.trim()
             }
         }
         return HexoPost
@@ -43,9 +43,9 @@ export class Hexo
         const content = `---
 ${yaml.dump(hexoPost.formatter, { indent: 2, flowLevel: 2 })}
 ---
-${hexoPost.brief}
+${hexoPost.brief.trim()}
 <!--more-->
-${hexoPost.content}`
+${hexoPost.content.trim()}`
         if(!fs.existsSync(savePath))
         {
             fs.mkdirSync(savePath)
