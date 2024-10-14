@@ -1,0 +1,64 @@
+<h2 id="3DGS椭球的成像过程的数学推导1">3DGS椭球的成像过程的数学推导1</h2>
+<p>假设世界坐标系下的高斯分布为 <span class="language-math">​{}^{w}G\sim N(\mu,\Sigma)</span></p>
+<h3 id="世界坐标系到相机坐标系">世界坐标系到相机坐标系</h3>
+<blockquote>
+    <p>坐标系的变换是使用仿射变换AX+b， A为旋转和缩放，b为平移。而常见的变换矩阵是4x4（由仿射变换推导的齐次坐标形式）的，但是他是对齐次坐标形式的点进行变换的。归根结底，坐标系之间的变换需要仿射变换。</p>
+</blockquote>
+<blockquote>
+    <p>仿射变换包括：平移，旋转，缩放，翻转</p>
+</blockquote>
+<div class="language-math">^{camera}G=^{camera}_{word}\mathbf{W}^{word}\mathbf{X}+^{camera}\mathbf{b}</div>
+<p>而对于3DGS来说，变换后的形式如下：</p>
+<div class="language-math">^{camera}G\sim N(\mathbf{W}\mathbf{\mu}+\mathbf{b},\mathbf{W}\Sigma\mathbf{W}^T)</div>
+<blockquote>
+    <p>为什么是 <span class="language-math">​\mathbf{W}\Sigma\mathbf{W^T}</span> 形式那？<br />
+        一维高斯 <span class="language-math">​aX + b</span> 结果 <span class="language-math">​X\sim
+            N(a\mu+b,a^{2}\sigma)</span><br />
+        类似的三维高斯 <span class="language-math">​\mathbf{A}\mathbf{X}+\mathbf{b}</span> 结果 <span
+            class="language-math">​X\sim N(\mathbf{A}\mathbf{\mu}+\mathbf{b},\mathbf{A}\Sigma\mathbf{A}^T)</span><br />
+        由于矩阵左乘和右乘含义不同，所以分开。</p>
+</blockquote>
+<h4 id="补充">补充</h4>
+<p><strong>线性变换：</strong></p>
+<ol>
+    <li>变换前是直线的，变换后依然是直线</li>
+    <li>直线比例保持不变</li>
+    <li>变换前是原点的，变换后依然是原点</li>
+</ol>
+<p><strong>仿射变换：</strong></p>
+<ol>
+    <li>变换前是直线的，变换后依然是直线</li>
+    <li>直线比例保持不变</li>
+</ol>
+<p>少了3因为仿射变换有平移操作，仿射变换不是线性变换。<br />
+    <strong>仿射变换（非线性变换）= 旋转缩放变换（线性变换）+ 平移变换（非线性变换）</strong>
+</p>
+<blockquote>
+    <p>注意：线性变换是指，映射到自身空间的线性映射。充要条件：1. <span class="language-math">​T(a+b)=T(a)+T(b)</span> 2. <span
+            class="language-math">​T(aX) = aT(X)</span><br />
+        可以证明仿射变换不是线性变换</p>
+</blockquote>
+<h3 id="透视投影变换">透视投影变换</h3>
+<p>透视投影并不是线性变换，也不是一个仿射变换。但可以写成4x4的齐次坐标形式。</p>
+<p>透视投影的变换就是非仿射变换非线性变换的坐标系转换，需要用到<strong>雅可比矩阵</strong>转换。</p>
+<div class="language-math">^{persp}G = ^{persp}_{camera}\mathbf{M}_{4\times4}^{camera}\mathbf{X}</div>
+<div class="language-math">^{persp}G\sim
+    N(M(\mathbf{W}\mathbf{\mu}+\mathbf{b}),\mathbf{J}\mathbf{W}\Sigma\mathbf{W^T}\mathbf{J}^T)</div>
+<div class="language-math">J=\begin{bmatrix}\frac{\partial f_{1}}{\partial x}&amp;\frac{\partial f_{1}}{\partial
+    y}&amp;\frac{\partial f_{1}}{\partial z}\\\frac{\partial f_{2}}{\partial x}&amp;\frac{\partial f_{2}}{\partial
+    y}&amp;\frac{\partial f_{2}}{\partial z} \\ \frac{\partial f_{3}}{\partial x}&amp;\frac{\partial f_{3}}{\partial
+    y}&amp;\frac{\partial f_{3}}{\partial z} \end{bmatrix}</div>
+<blockquote>
+    <p>此处J相当于仿射变换的旋转缩放矩阵因此和W一样左右乘，<span class="language-math">​\mathbf{M}_{4\times4}</span> 不是仿射变换不能拆成AX+b</p>
+    <p><span class="language-math">​\mathbf{f}</span> 为<span
+            class="language-math">​\mathbf{M}\mathbf{x}</span>再进行一次齐次坐标转换得来的</p>
+</blockquote>
+<h3 id="仿射变换和雅可比矩阵">仿射变换和雅可比矩阵</h3>
+<p>坐标系的转换是靠雅可比矩阵变换 + 平移变换的（也可以写成齐次坐标形式）。</p>
+<p>如果坐标系之间只有旋转缩放平移翻转这些<strong>仿射变换的关系</strong>，那么<strong>雅可比矩阵就是仿射变换的旋转缩放矩阵</strong>。换句话说这些情况（一般坐标系变换也就这些操作）坐标系变化可以用仿射变换转换。
+</p>
+<blockquote>
+    <p>雅可比矩阵的含义：对非线性变换的局部线性近似（仿射变换就不是近似了，它就是仿射变换的旋转缩放矩阵）</p>
+</blockquote>
+<p>如果坐标系之间有弯曲等非线性关系，那么雅可比矩阵就是某一点周围微小局部的旋转变换的估计。</p>
+<p><img src="upload/非线性变换.jpg" alt="非线性变换" /></p>

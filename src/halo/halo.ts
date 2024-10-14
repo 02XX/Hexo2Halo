@@ -23,10 +23,11 @@ import markdownit from 'markdown-it'
 import MarkdownIt from "markdown-it";
 import { katex } from '@mdit/plugin-katex'
 import { group } from "console";
+import anchor from "markdown-it-anchor";
 export class Halo
 {
     user: DetailedUser
-    markdownIt : MarkdownIt = new markdownit().use(katex)
+    markdownIt : MarkdownIt = new markdownit().use(katex).use(anchor)
     constructor(site:string, token:string)
     {
         if(site == "" || token == "")
@@ -202,6 +203,9 @@ export class Halo
                             metadata: {
                                 name: randomUUID(),
                                 creationTimestamp: hexoPost.formatter.date?.toISOString() ?? new Date().toISOString(),
+                                annotations: {
+                                    "content.halo.run/preferred-editor": "vditor-mde"
+                                }
                             },
                         },
                         content: {
@@ -228,6 +232,7 @@ export class Halo
         post.post.spec.tags = tags.map((item) => item.metadata.name)
         post.post.spec.excerpt.raw = hexoPost.brief
         post.post.spec.publish = true
+        post.post.metadata.annotations!["content.halo.run/preferred-editor"] = "vditor-mde"
         await consoleApiClient.content.post.updateDraftPost({
             name: post.post.metadata.name,
             postRequest:{
