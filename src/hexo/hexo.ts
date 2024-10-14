@@ -64,7 +64,7 @@ ${hexoPost.content}`
         var matches = hexoPost.content.matchAll(pattern)
         if (matches != null) {
             for (const match of matches) {
-                hexoPost.content = hexoPost.content.replace(match[0], `![${match[1]}](upload/${match[2]})`)
+                hexoPost.content = hexoPost.content.replace(match[0], `![${match[1]}](/upload/${match[2]})`)
             }
         }
     }

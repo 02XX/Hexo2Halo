@@ -250,6 +250,8 @@ export class Halo
     {
         const data = await consoleApiClient.content.post.listPosts()
         const posts = data.data.items
+        const attachments = (await coreApiClient.storage.attachment.listAttachment()).data.items
+        const groups = (await coreApiClient.storage.group.listGroup()).data.items
         let hexoPosts = new Array<HexoPost>()
         for (let post of posts)
         {
@@ -264,6 +266,14 @@ export class Halo
             }
             const data2 = await consoleApiClient.content.post.fetchPostContent({name: post.post.metadata.name, snapshotName: post.post.spec.headSnapshot})
             const postContent = data2.data
+            const pattern = /\!\[(.*)\]\(.*upload\/(.*)\)/g
+            const matches = postContent.raw!.matchAll(pattern)
+            for (const match of matches)
+            {
+                const image = attachments.find((item) => item.spec.displayName == match[2])
+                const groupName = groups.find((item) => item.metadata.name == image?.spec.groupName)
+                postContent.raw = postContent.raw!.replace(match[0], `![${match[1]}](./${groupName?.spec.displayName ?? "未分类"}/${match[2]})`)
+            }
             hexoPosts.push({
                 formatter: {
                     title: post.post.spec.title,

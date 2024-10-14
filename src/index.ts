@@ -3,11 +3,13 @@ import {Halo} from './halo/halo.js'
 import { Hexo } from './hexo/hexo.js'
 import { HexoPost } from './hexo/hexo-entities.js'
 import { correctData } from './halo/correctData.js'
-const siteUrl = "Your Site Url"
-const token = "Your Token"
-const hexoPostPath = "/media/zero/Data/MBlog/API/Articles/"
-const haloAttachmentPath = "/home/zero/halo/halo2/attachments/upload"
-const savePath = "/media/zero/Data/MBlog/HaloBlog"
+
+
+const siteUrl = "Your site url"
+const token = "Your token"
+const hexoPostPath = ""
+const haloAttachmentPath = ""
+const savePath = ""
 
 export const createHexo2Halo = async () => {
     const halo = new Halo(siteUrl, token)
@@ -18,7 +20,7 @@ export const createHexo2Halo = async () => {
     for (const hexoPost of hexoPosts) {
         console.log(`开始同步文章${hexoPost.hexoPost.formatter.title}`)
         const data = await halo.CreatePostFormHexo(hexoPost.hexoPost)
-        console.log(`同步文章${hexoPost.hexoPost.formatter.title}成功`)
+        console.log(`同步文章${hexoPost.hexoPost.formatter.title} 成功`)
         //sleep 500ms
         await new Promise((resolve) => {
             setTimeout(resolve, 500)
@@ -29,7 +31,7 @@ export const createHexo2Halo = async () => {
     for (const hexoPostImage of hexoPostImages) {
         console.log(`开始同步图片${hexoPostImage.group}/${hexoPostImage.name}`)
         const data = await halo.UploadImageFromHexo(hexoPostImage)
-        console.log(`同步图片${hexoPostImage.group}/${hexoPostImage.name}成功`)
+        console.log(`同步图片${hexoPostImage.group}/${hexoPostImage.name} 成功`)
         //sleep 500ms
         await new Promise((resolve) => {
             setTimeout(resolve, 500)
@@ -45,9 +47,9 @@ export const updateHexo2Halo = async () => {
     //同步hexo到halo
     const hexoPosts = hexo.loadMarkdown(hexoPostPath)
     for (const hexoPost of hexoPosts) {
-        console.log(`开始更新文章${hexoPost.hexoPost.formatter.title}`)
+        console.log(`开始更新文章: ${hexoPost.hexoPost.formatter.title}`)
         const data = await halo.UpdatePostFormHexo(hexoPost.hexoPost)
-        console.log(`更新文章${hexoPost.hexoPost.formatter.title}成功`)
+        console.log(`更新文章: ${hexoPost.hexoPost.formatter.title} 成功`)
         //sleep 500ms
         await new Promise((resolve) => {
             setTimeout(resolve, 500)
@@ -56,9 +58,9 @@ export const updateHexo2Halo = async () => {
     //同步图片到halo
     const hexoPostImages = hexo.loadMarkdownImage(hexoPostPath)
     for (const hexoPostImage of hexoPostImages) {
-        console.log(`开始更新图片${hexoPostImage.group}/${hexoPostImage.name}`)
+        console.log(`开始更新图片: ${hexoPostImage.group}/${hexoPostImage.name}`)
         const data = await halo.UploadImageFromHexo(hexoPostImage)
-        console.log(`更新图片${hexoPostImage.group}/${hexoPostImage.name}成功`)
+        console.log(`更新图片: ${hexoPostImage.group}/${hexoPostImage.name} 成功`)
         //sleep 500ms
         await new Promise((resolve) => {
             setTimeout(resolve, 500)
